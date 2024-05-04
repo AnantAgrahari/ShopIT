@@ -14,7 +14,7 @@ const productSchema=new mongoose.Schema({
         type: String,
         required:[true,"Please enter product description"],
     }, 
-    rating:{
+    ratings:{
         type:Number,
         default: 0
     },
@@ -38,7 +38,7 @@ const productSchema=new mongoose.Schema({
             message:"Please select correct category",
         },
     },
-    Seller:{
+    seller:{
         type: String,
         required:[true,"Please enter product seller"],
     },
@@ -70,10 +70,9 @@ const productSchema=new mongoose.Schema({
     user:{                                      //this is that user that has created the product//
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required: true,
+        required: false,
     },    
-},{
-    timestamps: true              //mongooose will automatically create a at what date it is created// 
-}
+},
+   { timestamps: true }              //mongooose will automatically create a at what date it is created// 
 );
 export default mongoose.model("Product",productSchema);
