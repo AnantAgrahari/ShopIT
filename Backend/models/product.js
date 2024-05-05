@@ -34,7 +34,7 @@ const productSchema=new mongoose.Schema({
         type: String,
         required:[true,'Please enter product category'],
         enum:{                      //in enum we restrict the user to some specific values,the user cannot enter the products other than the mentioned array//                        
-            values:["Laptops,electronics,cameras,headphones, food,headphones,home,outdoorzx"],                  //similar to drop down menu//
+            values:["Laptops","Electronics","Cameras","Headphones", "Food","Home","Outdoor","Accessories"],                  //similar to drop down menu//
             message:"Please select correct category",
         },
     },

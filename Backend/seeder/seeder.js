@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import products from "../seeder/data.js";
+import products from "./data.js";
 import Product from "../models/product.js";
 
 const seedProducts=async()=>{
@@ -20,3 +20,5 @@ const seedProducts=async()=>{
     }
 };
 seedProducts();
+
+//this file will save all the data from data.js into the database//
