@@ -4,7 +4,7 @@ import APIFilters from "../utils/apiFilters.js";
 import ErrorHandler from "../utils/errorHandler.js";
 
 export const getProducts=catchAsyncErrors(async(req,res)=>{
-    const apiFilters=new APIFilters(Product,req.query).search();    //searches the product with just a keyword//
+    const apiFilters=new APIFilters(Product,req.query).search().filters();    //searches the product with just a keyword//
     let products=await apiFilters.query;      //same here also//
     let filteredProductsCount=products.length;          //this will give you the count of total products with that particular keyword//
 
