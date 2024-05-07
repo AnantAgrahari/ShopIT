@@ -19,22 +19,26 @@ class APIFilters{
     const queryCopy={...this.queryStr};
      
     //fields to remove//
-    const fieldsToRemove=["keyword"];
+    const fieldsToRemove=["keyword","page"];
     fieldsToRemove.forEach((el)=>delete queryCopy[el]);
 
    //advance filter for price, ratings etc//
     
       let queryStr=JSON.stringify(queryCopy);
-      queryStr=queryStr.replace(/\b(gt|gte|lt|lte)\b/g,(match)=>`$${match}`);
+      queryStr=queryStr.replace(/\b(gt|gte|lt|lte)\b/g,(match)=>`$${match}`);     //g means a global search,, /b means that it will match the entire word//
 
-      console.log("======");
-    console.log(queryCopy);
-    console.log("=====");
-   
-    this.query=this.query.find(this.queryStr);
+    this.query=this.query.find(JSON.parse(queryStr));    //to convert it into json format//
     return this; 
    }
 
+   pagination(resPerPage){            //this func. allows you to go to page you wish to go//
+    const currentPage=Number(this.queryStr.page) || 1 ;
+    const skip= resPerPage* (currentPage-1);    //if there is for eg. 10 results in a page and we have to go to next page then we have to skip first 10 data// 
+     
+    this.query=this.query.limit(resPerPage).skip(skip);    //skip func of mongoose used to skip x amount of results//
+    return this;
+}
+    
 }
 
 export default APIFilters;

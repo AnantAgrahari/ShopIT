@@ -3,13 +3,18 @@ import Product from "../models/product.js";
 import APIFilters from "../utils/apiFilters.js";
 import ErrorHandler from "../utils/errorHandler.js";
 
+
+
 export const getProducts=catchAsyncErrors(async(req,res)=>{
+    const resPerPage=4;
     const apiFilters=new APIFilters(Product,req.query).search().filters();    //searches the product with just a keyword//
     let products=await apiFilters.query;      //same here also//
     let filteredProductsCount=products.length;          //this will give you the count of total products with that particular keyword//
 
+    apiFilters.pagination(resPerPage);
+    products=await apiFilters.query.clone();   // we are executing it for the 2nd time so we have to clone it//
 
-    res.status(300).json({filteredProductsCount,products}); 
+    res.status(300).json({resPerPage,filteredProductsCount,products}); 
 });
 
 
