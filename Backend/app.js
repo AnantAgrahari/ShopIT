@@ -5,6 +5,7 @@ import { connectDatabase } from "./config/dbConnect.js";        //stores the sen
 import errorMiddleware from "./middlewares/errors.js";
 
 //handle uncaught exceptions//
+
 process.on("uncaughtException",(err)=>{
     console.log(`ERROR: ${err}`);
     console.log("Shutting down due to uncaught exception");
@@ -13,16 +14,17 @@ process.on("uncaughtException",(err)=>{
 
 dotenv.config ({path:"backend/config/config.env"});
 connectDatabase();
-app.use(express.json());       //without this file will not be converted into json//
+app.use(express.json());       //without this, file will not be converted into json//
 // console.log(hello);
 import productRoutes from "./routes/products.js";
 
 
-app.use("/api/v1",productRoutes);      //this is the main route without which route cannot be start//
-app.use(errorMiddleware);           //it will handle all the errors for us// 
+app.use("/api/v1",productRoutes);                      //this is the main route without which route cannot be start//
+app.use(errorMiddleware);                               //it will handle all the errors for us// 
 const server=app.listen(process.env.PORT,() =>{
     console.log(`server started on port :${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
 });
+
 
 //handle unhandled promise rejections//
 
