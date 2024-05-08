@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
  const userSchema=new mongoose.Schema({
     name:{
         type: String,
@@ -8,17 +10,17 @@ import mongoose from "mongoose";
     email:{
         type: String,
         required:[true,"please enter your email"],
-        unique:true,    //2 users cannot have same email//
+        unique:true,                                          //2 users cannot have same email//
     },
     password:{
         type: String,
         required: [true, "please  enter your password"],
         minLength:[6, "Your password should be at least  of 6 characters"],
-        select: false,                  // select false means that dont send this password in response to the user//
+        select: false,                               // select false means that dont send this password in response to the user//
     },
     avatar:{
         public_id: String ,
-        url: String,           //url of the image//
+        url: String,                                    //url of the image//
     },
     role:{
         type: String,
@@ -31,4 +33,26 @@ import mongoose from "mongoose";
  { timestamps: true }                 // it will show all the details about when the it is created and updated//
  );
 
+
+
+ //encrypting the password before saving the user//
+
+  userSchema.pre('save',async function(next){          //pre func in mongoose is used as before saving the user, encrypt the password//
+    // if(!this.isModified("password")){
+    //     next();
+    // }
+    this.password=await bcrypt.hash(this.password,10)    //  10 is the salt value, which means that higher the salt value, stronger the password will be hashed//
+  });
+
+  //return JWT token//
+  userSchema.methods.getJwtToken=function(){
+   return jwt.sign({id: this._id},process.env.JWT_SECRET,{
+        expiresIn: process.env.JWT_EXPIRES_TIME,                  //after the expiry time the user haas to login again//
+    } );
+  };
+
+    // compare user password//
+    userSchema.methods.comparePassword=async function (enteredPassword){
+        return await bcrypt.compare(enteredPassword,this.password);              //entered password is the password enterd by the user and this.password is the password that is there in the database//
+    }
 export default mongoose.model("User",userSchema);

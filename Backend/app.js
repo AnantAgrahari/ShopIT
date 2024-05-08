@@ -16,10 +16,12 @@ dotenv.config ({path:"backend/config/config.env"});
 connectDatabase();
 app.use(express.json());       //without this, file will not be converted into json//
 // console.log(hello);
-import productRoutes from "./routes/products.js";
 
+import productRoutes from "./routes/products.js";
+import authRoutes from "./routes/auth.js";
 
 app.use("/api/v1",productRoutes);                      //this is the main route without which route cannot be start//
+app.use("/api/v1",authRoutes);
 app.use(errorMiddleware);                               //it will handle all the errors for us// 
 const server=app.listen(process.env.PORT,() =>{
     console.log(`server started on port :${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
