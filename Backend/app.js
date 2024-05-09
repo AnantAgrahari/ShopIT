@@ -1,6 +1,7 @@
 import express from "express";
 const app=express();
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import { connectDatabase } from "./config/dbConnect.js";        //stores the sensitive info securely without being exposed into codebase//
 import errorMiddleware from "./middlewares/errors.js";
 
@@ -15,7 +16,8 @@ process.on("uncaughtException",(err)=>{
 dotenv.config ({path:"backend/config/config.env"});
 connectDatabase();
 app.use(express.json());       //without this, file will not be converted into json//
-// console.log(hello);
+
+app.use(cookieParser());        //handle all the cookies//
 
 import productRoutes from "./routes/products.js";
 import authRoutes from "./routes/auth.js";
