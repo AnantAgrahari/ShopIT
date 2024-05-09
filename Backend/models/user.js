@@ -14,8 +14,8 @@ import jwt from "jsonwebtoken";
     },
     password:{
         type: String,
-        required: [true, "please  enter your password"],
-        minLength:[6, "Your password should be at least  of 6 characters"],
+        required: [true,"please enter your password"],
+        minLength:[6, "Your password should be at least of 6 characters"],
         select: false,                               // select false means that dont send this password in response to the user//
     },
     avatar:{
