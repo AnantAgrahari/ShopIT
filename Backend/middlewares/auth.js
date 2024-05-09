@@ -10,7 +10,21 @@ export const isAuthenticatedUser=catchAsyncErrors(async(req,res,next)=>{
     return next(new ErrorHandler("login first to access this resource",401));
    }
 
-   const decoded= jwt.verify(token,process.env.JWT_SECRET);       //this verifies whether the token is expired or not//
+   const decoded= jwt.verify(token,process.env.JWT_SECRET);       //this verifies whether the token is expired or not and in response it returns the id if token is not expired//
    req.user=await User.findById(decoded.id);
     next();
-})
+});
+
+
+// Authorize user roles//
+export const authorizeRoles=(...roles)=>{
+    return (req,res,next)=>{
+        if(!roles.includes(req.user.role)){
+            return next(
+                new ErrorHandler(
+                    `Role ${req,user.role} is not allowed to access this resource`,403
+                )
+            )
+        }
+    }
+}
