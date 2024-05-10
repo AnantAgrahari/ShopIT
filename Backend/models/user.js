@@ -47,7 +47,7 @@ import jwt from "jsonwebtoken";
   //return JWT token//
   userSchema.methods.getJwtToken=function(){
    return jwt.sign({id: this._id},process.env.JWT_SECRET,{
-        expiresIn: process.env.JWT_EXPIRES_TIME,                  //after the expiry time the user haas to login again//
+        expiresIn: process.env.JWT_EXPIRES_TIME,                  //after the expiry time the user has to login again//
     } );
   };
 
@@ -55,4 +55,26 @@ import jwt from "jsonwebtoken";
     userSchema.methods.comparePassword=async function (enteredPassword){
         return await bcrypt.compare(enteredPassword,this.password);              //entered password is the password enterd by the user and this.password is the password that is there in the database//
     }
+
+    
+    //Generate reset password token//
+    userSchema.methods.getResetPasswordToken=function(){
+        //create token//
+        const resetToken=crypto.randomBytes(20).toString('hex');      // This will give us the reset token, In the email we will send this token//
+        
+        //hash and set to resetPasswordToken field
+        this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest('hex');
+
+         //set token expire time
+         this.resetPasswordExpire=Date.now()+ 30*60*1000;
+         return resetToken;
+
+    }
+
+
+
+
+
+
+
 export default mongoose.model("User",userSchema);

@@ -1,7 +1,7 @@
 import ErrorHandler from "../utils/errorHandler.js";
 import catchAsyncErrors from "./catchAsyncErrors.js";
 import jwt from "jsonwebtoken";
-
+import User from "../models/user.js";
 
 //checks if user is authenticated or not//
 export const isAuthenticatedUser=catchAsyncErrors(async(req,res,next)=>{
@@ -17,14 +17,15 @@ export const isAuthenticatedUser=catchAsyncErrors(async(req,res,next)=>{
 
 
 // Authorize user roles//
-export const authorizeRoles=(...roles)=>{
+export const authorizeRoles=(...roles)=>{      //role that is assigned to the user in the route//
     return (req,res,next)=>{
-        if(!roles.includes(req.user.role)){
+        if(!roles.includes(req.user.role)){      //if the roles doesn't match with the current user role,then yser is not authoris3d to access this resource
             return next(
                 new ErrorHandler(
-                    `Role ${req,user.role} is not allowed to access this resource`,403
+                    `Role (${req.user.role}) is not allowed to access this resource`,403
                 )
             )
         }
+        next();
     }
 }

@@ -8,8 +8,11 @@ export const registerUser=catchAsyncErrors(async(req,res,next)=>{
      const user=await User.create({
         name, email, password,
      });
-      
+     
     sendToken(user,201,res);
+    res.status(200).json({
+        success: true,
+    })
 });
 
 

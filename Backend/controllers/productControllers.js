@@ -19,7 +19,9 @@ export const getProducts=catchAsyncErrors(async(req,res)=>{
 
 
 export const newProduct=catchAsyncErrors(async(req,res)=>{
-   const product=await Product.create(req.body);  //create func is used to create a doc of whole model//
+   req.body.user=req.user._id;
+   
+    const product=await Product.create(req.body);  //create func is used to create a doc of whole model//
 
    res.status(200).json({ product,});
 });

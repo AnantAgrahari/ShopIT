@@ -70,7 +70,7 @@ const productSchema=new mongoose.Schema({
     user:{                                      //this is that user that has created the product//
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required: false,
+        required: true,
     },    
 },
    { timestamps: true }              //mongooose will automatically create a at what date it is created// 
