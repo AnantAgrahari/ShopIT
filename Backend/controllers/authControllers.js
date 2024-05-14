@@ -4,6 +4,8 @@ import { getResetPasswordTemplate } from "../utils/emailTemplates.js";
 
 import ErrorHandler from "../utils/errorHandler.js";
 import sendToken from "../utils/sendToken.js";
+import sendEmail from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 export const registerUser=catchAsyncErrors(async(req,res,next)=>{
     const { name,email,password}= req.body;
@@ -61,17 +63,19 @@ export const logoutUser=catchAsyncErrors(async(req,res,next)=>{
 
 
 
+
+
 // Forgot password 
 export const forgotPassword=catchAsyncErrors(async(req,res,next)=>{
       
      //find user in the DB//
      const user=await User.findOne({email:req.body.email});
-     if(!user)
+     if(!user)                                                              //if user is not there in database//
      {
         return next(new ErrorHandler('user not found with this email',404))
      }
    
-      //get reset password token//
+      //get reset password token if user is present//
       const resetToken= user.getResetPasswordToken();
       await user.save();       //will save resetPasswordToken & resetPasswordExpire field in the DB
       
@@ -88,12 +92,12 @@ export const forgotPassword=catchAsyncErrors(async(req,res,next)=>{
 
         res.status(200).json({                    
             message:`email sent to: ${user.email}`,                //if sentEmail func. executes successfully then it will show confirmation message//
-        })
+        });
      } catch (error) {
-        user.resetPasswordToken = undefined
-        user.resetPasswordExpire=undefined
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire=undefined;
         await user.save();
-        return next(new ErrorHandler(error?.message,500))
+        return next(new ErrorHandler(error?.message,500));
      }
 });
 
@@ -101,5 +105,31 @@ export const forgotPassword=catchAsyncErrors(async(req,res,next)=>{
 
 // Reset Password 
 export const resetPassword=catchAsyncErrors(async(req,res,next)=>{
+  //hash the url token//
+ const resetPasswordToken=crypto.createHash("sha256").update(req.params.token).digest("hex"); 
+ const user=await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire:{ $gt: Date.now()}
+ })
+
+ if(!user)
+ {
+    return next(new ErrorHandler("Password reset token is invalid or has been expired",400));
+ }
+
+  if(req.body.password !== req.body.confirmPassword)
+  {
+    return next(new ErrorHandler("Password does not match",400));
+  }
+
+  // Set the new password
+
+   user.password=req.body.password;         //it will hash the new password and save it in the DB//
+
+   user.resetPasswordToken=undefined;
+   user.resetPasswordExpire=undefined;
+   await user.save();
+
+   sendToken(user,200,res);             //after the new password is set, then it will send the token again//
 
 });

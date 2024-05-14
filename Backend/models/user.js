@@ -39,11 +39,11 @@ import crypto from "crypto";
  //encrypting the password before saving the user//
 
   userSchema.pre('save',async function(next){          //pre func in mongoose is used as before saving the user, encrypt the password//
-    // if(!this.isModified("password")){
-    //     next();
-    // }
+    if(!this.isModified("password")){
+        next();
+    }
     this.password=await bcrypt.hash(this.password,10)    //  10 is the salt value, which means that higher the salt value, stronger the password will be hashed//
-  });
+  });       //this means the current password//
 
   //return JWT token//
   userSchema.methods.getJwtToken=function(){
@@ -61,7 +61,7 @@ import crypto from "crypto";
     //Generate reset password token//
     userSchema.methods.getResetPasswordToken=function(){
         //create token//
-        const resetToken=crypto.randomBytes(20).toString('hex');      // This will give us the reset token, In the email we will send this token//
+        const resetToken= crypto.randomBytes(20).toString('hex');      // This will give us the reset token, In the email we will send this token//
         
         //hash and set to resetPasswordToken field
         this.resetPasswordToken=crypto.createHash("sha256").update(resetToken).digest('hex');
@@ -71,11 +71,6 @@ import crypto from "crypto";
          return resetToken;
 
     }
-
-
-
-
-
 
 
 export default mongoose.model("User",userSchema);
