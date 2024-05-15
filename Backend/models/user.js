@@ -45,6 +45,8 @@ import crypto from "crypto";
     this.password=await bcrypt.hash(this.password,10)    //  10 is the salt value, which means that higher the salt value, stronger the password will be hashed//
   });       //this means the current password//
 
+
+  
   //return JWT token//
   userSchema.methods.getJwtToken=function(){
    return jwt.sign({id: this._id},process.env.JWT_SECRET,{

@@ -7,6 +7,7 @@ import sendToken from "../utils/sendToken.js";
 import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
 
+//register user
 export const registerUser=catchAsyncErrors(async(req,res,next)=>{
     const { name,email,password}= req.body;
      const user=await User.create({
@@ -20,7 +21,7 @@ export const registerUser=catchAsyncErrors(async(req,res,next)=>{
 });
 
 
-
+//login user//
 export const loginUser=catchAsyncErrors(async(req,res,next)=>{
     const { email,password}= req.body;
 
@@ -132,4 +133,37 @@ export const resetPassword=catchAsyncErrors(async(req,res,next)=>{
 
    sendToken(user,200,res);             //after the new password is set, then it will send the token again//
 
+});
+
+
+
+// get current user details
+export const getUserProfile=catchAsyncErrors(async(req,res,next)=>
+{
+    const user=await User.findById(req?.user?._id);               //req.user will get the details of the current user//
+     
+    res.status(200).json({
+     user,   
+    })
+});
+
+
+
+// update password endpoint
+export const updatePassword=catchAsyncErrors(async(req,res,next)=>
+{
+   const user=await User.findById(req?.user?._id).select("+password");
+
+   //check the previous user password//
+   const isPasswordMatched=await user.comparePassword(req.body.oldPassword);
+
+   if(!isPasswordMatched){
+    return next(new ErrorHandler('Old password is incorrect',400))
+   }
+
+   user.password=req.body.password;        //req.body.password is the new password or the updated password and it will be hashed and will be saved in the DB//
+   user.save();
+   res.status(200).json({
+    success: true,
+   });
 });
