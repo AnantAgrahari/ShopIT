@@ -167,3 +167,21 @@ export const updatePassword=catchAsyncErrors(async(req,res,next)=>
     success: true,
    });
 });
+
+
+
+
+//  update user profile
+export const updateProfile=catchAsyncErrors(async(req,res,next)=>
+{
+  const newUserData={
+    name: req.body.name,
+    email: req.body.email
+  }
+   
+  const user=await User.findByIdAndUpdate(req.user._id, newUserData,{new:true})
+  
+   res.status(200).json({
+   user
+   });
+});
