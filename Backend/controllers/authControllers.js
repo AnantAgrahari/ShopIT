@@ -182,6 +182,33 @@ export const updateProfile=catchAsyncErrors(async(req,res,next)=>
   const user=await User.findByIdAndUpdate(req.user._id, newUserData,{new:true})
   
    res.status(200).json({
-   user
+   user,
+   });
+});
+
+
+
+
+//   get all users - admin routes//
+export const allUsers=catchAsyncErrors(async(req,res,next)=>
+{
+ const users=await User.find();
+
+   res.status(200).json({
+   users,
+   });
+});
+
+
+//   get User details - admin routes//
+export const getUserDetails=catchAsyncErrors(async(req,res,next)=>
+{
+ const user=await User.findById(req.params.id);
+    if(!user)
+    {
+        return next (new ErrorHandler(`User not found with id:${req.params.id}`,404))
+    }
+   res.status(200).json({
+   user,
    });
 });
