@@ -21,9 +21,12 @@ app.use(cookieParser());        //handle all the cookies//
 
 import productRoutes from "./routes/products.js";
 import authRoutes from "./routes/auth.js";
+import orderRoutes from "./routes/order.js";
 
 app.use("/api/v1",productRoutes);                      //this is the main route without which route cannot be start//
 app.use("/api/v1",authRoutes);
+app.use("/api/v1",orderRoutes);
+
 app.use(errorMiddleware);                               //it will handle all the errors for us// 
 const server=app.listen(process.env.PORT,() =>{
     console.log(`server started on port :${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
