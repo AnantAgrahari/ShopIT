@@ -3,7 +3,7 @@ import { getProducts, newProduct, getProductDetails, updateProducts,deleteProduc
 import { authorizeRoles,isAuthenticatedUser } from "../middlewares/auth.js";
 const router=express.Router();   //will enable the routes function//
 
-router.route("/products").get(isAuthenticatedUser,authorizeRoles('admin'),getProducts);         //authorizeRoles is also a middleware//
+router.route("/products").get(authorizeRoles('admin'),getProducts);         //authorizeRoles is also a middleware//
 router.route("/admin/products").post(isAuthenticatedUser,authorizeRoles('admin'),newProduct); 
 
 router.route("/products/:id").get(getProductDetails);
