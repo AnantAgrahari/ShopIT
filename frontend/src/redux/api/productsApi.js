@@ -4,7 +4,13 @@ export const productApi=createApi({
     baseQuery: fetchBaseQuery({baseUrl:"/api/v1"}),
     endpoints:(builder)=>({
         getProducts: builder.query({
-            query:(params)=>"/products",
+            query:(params)=>({
+                url:"/products",
+                params:{
+                    page:params?.page,
+                    keyword:params?.keyword,
+                },
+            }),
         }),            //builder.query is used to fetch the data and builder.mutation is used to post,put the data//
            getProductDetails: builder.query({
             query:(id)=>`/products/${id}`,
