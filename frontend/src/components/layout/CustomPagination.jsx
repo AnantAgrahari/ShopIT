@@ -1,0 +1,46 @@
+import React, { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import Pagination from "react-js-pagination" 
+
+const CustomPagination = ({resPerPage,filteredProductsCount}) => {
+    const [currentPage,setCurrentPage]=useState();
+    let {searchParams}=useSearchParams();
+
+    const page=Number(searchParams.get("page")) || 1;
+
+    useEffect(()=>{
+        setCurrentPage(page);
+    },[page]);
+
+    const setCurrentPageNo=(pageNumber)=>{
+      setCurrentPage(pageNumber)
+      if(searchParams.has("page")){
+        searchParams.set("page",pageNumber)
+      }
+      else
+      {
+        searchParams.append("page",pageNumber);
+      }
+    };
+
+  return (
+    <div className="d-flex justify-content-center my-5">
+        {filteredProductsCount>resPerPage &&                    //if the filtered products is greater than resperpage then we will render the pagination component//
+            <Pagination 
+            activePage={currentPage}
+            itemsCountPerPage={resPerPage}
+            totalItemsCount={filteredProductsCount}
+            onChange={setCurrentPageNo}
+            nextPageText={"next"}
+            prevPageText={"prev"}
+            firstPageText={"first"}
+            lastPageText={"last"}
+            itemClass="page-item"
+            linkClass="page-link"
+            />
+        }
+    </div>
+  )
+}
+
+export default CustomPagination

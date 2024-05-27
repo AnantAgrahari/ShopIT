@@ -6,7 +6,10 @@ export const productApi=createApi({
         getProducts: builder.query({
             query:(params)=>"/products",
         }),            //builder.query is used to fetch the data and builder.mutation is used to post,put the data//
+           getProductDetails: builder.query({
+            query:(id)=>`/products/${id}`,
+           }),
     }),
 });
 
-export const { useGetProductsQuery}=productApi;      //this hook will fetch all the products from the backend//
+export const { useGetProductsQuery,useGetProductDetailsQuery}=productApi;      //this hook will fetch all the products from the backend//

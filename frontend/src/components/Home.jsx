@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MetaData from './layout/MetaData'
 import { useGetProductsQuery } from '../redux/api/productsApi'
+import Loader from './layout/Loader'
 import ProductItem from './product/ProductItem'
+import toast from "react-hot-toast";
+import CustomPagination from './layout/CustomPagination'
+
 const Home = () => {
-    const {data,isLoading}=useGetProductsQuery();
-    // console.log(data,isLoading);
+    const {data,isLoading,error,isError}=useGetProductsQuery();
+
+   useEffect(()=>{
+    if(isError)
+    {
+        toast.error(error?.data?.message);
+    }
+   },[isError])
+
+   if(isLoading)
+   return <Loader/>
 
   return (
    <>
@@ -23,6 +36,8 @@ const Home = () => {
         
           </div>
         </section>
+
+        <CustomPagination resPerPage={data?.resPerPage} filteredProductsCount={data?.filteredProductsCount} />
       </div>
     </div>
    </>
