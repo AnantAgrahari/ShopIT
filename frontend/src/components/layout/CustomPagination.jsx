@@ -4,7 +4,7 @@ import Pagination from "react-js-pagination"
 
 const CustomPagination = ({resPerPage,filteredProductsCount}) => {
     const [currentPage,setCurrentPage]=useState();
-    let {searchParams}=useSearchParams();
+    let [searchParams]=useSearchParams();
     const navigate=useNavigate();
 
     const page=Number(searchParams.get("page")) || 1;

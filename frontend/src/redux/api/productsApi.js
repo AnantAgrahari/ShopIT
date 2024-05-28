@@ -9,6 +9,10 @@ export const productApi=createApi({
                 params:{
                     page:params?.page,
                     keyword:params?.keyword,
+                    category: params?.category,
+                    "price[gte]":params.min,
+                    "price[lte]":params.max,
+                    "ratings[gte]":params?.ratings
                 },
             }),
         }),            //builder.query is used to fetch the data and builder.mutation is used to post,put the data//
