@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useLoginMutation } from '../../redux/api/authApi';
-
+import toast from 'react-hot-toast';
 const Login = () => {
  
     const [email,setEmail]=useState("");
@@ -12,7 +12,7 @@ const Login = () => {
         if(error){
             toast.error(error?.data?.message);
         }
-    })
+    },[error]);
 
    const submitHandler=(e)=>{
     e.preventDefault();

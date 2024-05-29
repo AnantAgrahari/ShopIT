@@ -4,6 +4,15 @@ export const authApi=createApi({
     baseQuery: fetchBaseQuery({baseUrl:"/api/v1"}),
     endpoints:(builder)=>({
                                                  //builder.query is used to fetch the data and builder.mutation is used to post,put the data//
+       register: builder.mutation({
+        query(body){
+            return {
+                url:"/register",
+                method:"POST",
+                body,
+            };
+        },
+       }),
        login: builder.mutation({
         query(body){
             return {
@@ -17,4 +26,4 @@ export const authApi=createApi({
     })
 
 
-export const {useLoginMutation}=authApi;      //this hook will fetch all the products from the backend//
+export const {useLoginMutation,useRegisterMutation}=authApi;      //this hook will fetch all the products from the backend//
