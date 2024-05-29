@@ -1,4 +1,5 @@
 import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
+import { userApi } from "./userApi";
 export const authApi=createApi({
     reducerPath:"authApi",
     baseQuery: fetchBaseQuery({baseUrl:"/api/v1"}),
@@ -42,8 +43,11 @@ export const authApi=createApi({
         },
 
        }),
+       logout: builder.query({
+            query: ()=>"/logout",
+       }),
          }),
-    })
+    });
 
 
-export const {useLoginMutation,useRegisterMutation}=authApi;      //this hook will fetch all the products from the backend//
+export const {useLoginMutation,useRegisterMutation,useLazyLogoutQuery}=authApi;      //this hook will fetch all the products from the backend//
