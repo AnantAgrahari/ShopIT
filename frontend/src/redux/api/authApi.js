@@ -12,6 +12,16 @@ export const authApi=createApi({
                 body,
             };
         },
+      
+        async onQueryStarted(args,{dispatch,queryFulfilled}){
+            try {
+                await queryFulfilled;
+                await dispatch(userApi.endpoints.getMe.initiate(null));
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
        }),
        login: builder.mutation({
         query(body){
@@ -21,6 +31,16 @@ export const authApi=createApi({
                 body,
             };
         },
+       
+        async onQueryStarted(args,{dispatch,queryFulfilled}){
+            try {
+                await queryFulfilled;
+                await dispatch(userApi.endpoints.getMe.initiate(null));
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
        }),
          }),
     })
