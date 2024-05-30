@@ -10,6 +10,7 @@ import Register from "./components/auth/Register";
 import Profile from "./components/user/Profile";
 import UpdateProfile from "./components/user/UpdateProfile";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import UpdatePassword from "./components/user/UpdatePassword";
 function App() {
   return (
     <Router>
@@ -29,6 +30,7 @@ function App() {
          <Profile/>
         </ProtectedRoute>}/>
       <Route path="/me/update_profile" element={   <ProtectedRoute><UpdateProfile/></ProtectedRoute>}/>
+      <Route path="/me/update_password" element={   <ProtectedRoute><UpdatePassword/></ProtectedRoute>}/>
      </Routes>
      </div>
 
