@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useForgotPasswordMutation } from '../../redux/api/userApi';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +33,7 @@ const ForgotPassword = () => {
   e.preventDefault();
   
    forgotPassword({email});
- }
+ };
 
 
 
@@ -61,8 +61,9 @@ const ForgotPassword = () => {
           id="forgot_password_button"
           type="submit"
           className="btn w-100 py-2"
+          disabled={isLoading}
         >
-          Send Email
+         {isLoading ? "Sending..." :"Send Email"}
         </button>
       </form>
     </div>

@@ -11,6 +11,7 @@ import Profile from "./components/user/Profile";
 import UpdateProfile from "./components/user/UpdateProfile";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UpdatePassword from "./components/user/UpdatePassword";
+import ForgotPassword from "./components/auth/ForgotPassword";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
       <Route path="/product/:id" element={<ProductDetails/>}/>   
       <Route path="/login" element={<Login />}/>
       <Route path="/register" element={<Register />}/>
+      <Route path="/password/forgot" element={<ForgotPassword />}/>
 
       <Route path="/me/profile" element={
       <ProtectedRoute>
