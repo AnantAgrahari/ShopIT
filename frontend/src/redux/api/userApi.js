@@ -52,8 +52,17 @@ export const userApi=createApi({
             };
         },
        }),
+       resetPassword: builder.mutation({
+        query({token,body}){
+            return{
+                url:`/password/reset/${token}`,
+                method:"PUT",
+                body,
+            };
+        },
+       }),
          }),
     });
 
 
-export const {useGetMeQuery,useUpdateProfileMutation,useUpdatePasswordMutation,useForgotPasswordMutation}=userApi;      //this hook will fetch all the products from the backend//
+export const {useGetMeQuery,useUpdateProfileMutation,useUpdatePasswordMutation,useForgotPasswordMutation,useResetPasswordMutation}=userApi;      //this hook will fetch all the products from the backend//
