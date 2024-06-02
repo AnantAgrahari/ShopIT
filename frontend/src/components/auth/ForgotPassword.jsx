@@ -3,6 +3,7 @@ import { useForgotPasswordMutation } from '../../redux/api/userApi';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import MetaData from '../layout/MetaData'
 
 const ForgotPassword = () => {
     const [email,setEmail]=useState("");
@@ -12,7 +13,7 @@ const ForgotPassword = () => {
 
    const {isAuthenticated}=useSelector((state)=>state.auth);
    
-   
+
    useEffect(()=>{
     if(isAuthenticated){
       navigate("/");
@@ -37,6 +38,8 @@ const ForgotPassword = () => {
 
 
   return (
+    <>
+    <MetaData title={"forgot password"} />
     <div className="row wrapper">
     <div className="col-10 col-lg-5">
       <form
@@ -67,6 +70,7 @@ const ForgotPassword = () => {
       </form>
     </div>
   </div>
+  </>
   )
 }
 

@@ -1,11 +1,14 @@
 import React from 'react'
 import UserLayout from '../layout/UserLayout'
 import {useSelector} from "react-redux"
+import MetaData from '../layout/MetaData'
 const Profile = () => {
    
     const {user}=useSelector((state)=>state.auth);
 
   return <UserLayout>
+      <>
+    <MetaData title={"Your profile"} />
        <div className="row justify-content-around mt-5 user-info">
       <div className="col-12 col-md-3">
         <figure className="avatar avatar-profile">
@@ -28,6 +31,7 @@ const Profile = () => {
         <p>{user?.createdAt?.substring(0,10)}</p>
       </div>
     </div>
+    </>
   </UserLayout>
 };
 
