@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 const PaymentMethod = () => {
 
     const [method,setMethod]=useState("");
+
     const { shippingInfo,cartItems}=useSelector((state)=>state.cart);
   const navigate=useNavigate();
    const [createNewOrder,{isLoading,error,isSuccess}]=useCreateNewOrderMutation();
@@ -19,7 +20,7 @@ const PaymentMethod = () => {
         toast.error(error?.data?.message);
     }
     if(isSuccess){
-        navigate("/");
+        navigate("/order_accepted");
     }
   },[error,isSuccess]);
 
@@ -30,7 +31,7 @@ const PaymentMethod = () => {
    const {  itemsPrice,
     shippingPrice,
     taxPrice,
-    totalPrice,}=calculateOrderCost(cartItems);
+    totalPrice}=calculateOrderCost(cartItems);
 
    if(method==="COD"){
     //creates COD order//
@@ -76,7 +77,7 @@ const PaymentMethod = () => {
             value="COD"
             onChange={(e)=>setMethod("COD")}
           />
-          <label className="form-check-label" for="codradio">
+          <label className="form-check-label" htmlFor="codradio">
             Cash on Delivery
           </label>
         </div>
@@ -89,7 +90,7 @@ const PaymentMethod = () => {
             value="Card"
             onChange={(e)=>setMethod("Card")}
           />
-          <label className="form-check-label" for="cardradio">
+          <label className="form-check-label" htmlFor="cardradio">
             Card - VISA, MasterCard
           </label>
         </div>
