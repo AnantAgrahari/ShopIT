@@ -20,6 +20,7 @@ import PaymentMethod from "./components/cart/PaymentMethod";
 import orderAccepted from "./components/cart/orderAccepted";
 import MyOrders from "./components/order/MyOrders";
 import OrderDetails from "./components/order/OrderDetails";
+import Invoice from "./components/invoice/Invoice.jsx";
 function App() {
   return (
     <Router>
@@ -49,6 +50,7 @@ function App() {
       <Route path="/order_accepted" element={<orderAccepted />}/>
       <Route path="/me/orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>}/>
       <Route path="/me/order/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>}/>
+      <Route path="/me/invoice/:id" element={<ProtectedRoute><Invoice/></ProtectedRoute>}/>
      </Routes>
      </div>
 

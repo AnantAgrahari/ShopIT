@@ -12,6 +12,8 @@ const OrderDetails = () => {
   const order=data?.order || {};
 
   const { shippingInfo,orderItems,paymentInfo,user,totalAmount,orderStatus}=order;
+
+  const isPaid=paymentInfo?.status==="paid" ? true: false 
    
   useEffect(()=>{
     if(error){
@@ -47,7 +49,7 @@ const OrderDetails = () => {
           </tr>
           <tr>
             <th scope="row">Date</th>
-            <td>{new Date(order?.createdAt).toLocalStorage("en-US")}</td>
+            <td>{new Date(order?.createdAt).toLocaleString("en-US")}</td>
           </tr>
         </tbody>
       </table>
@@ -75,7 +77,7 @@ const OrderDetails = () => {
         <tbody>
           <tr>
             <th scope="row">Status</th>
-            <td className="greenColor">
+            <td className={isPaid ? "greenColor" : "redColor"}>
               <b>{paymentInfo?.status}</b>
             </td>
           </tr>
@@ -102,23 +104,23 @@ const OrderDetails = () => {
          <div className="row my-5">
          <div className="col-4 col-lg-2">
            <img
-             src="../images/product.jpg"
-             alt="Product Name"
+             src={item?.image}
+             alt={item?.name}
              height="45"
              width="65"
            />
          </div>
 
          <div className="col-5 col-lg-5">
-           <a href="/products/product-id">Product Name</a>
+           <Link to={`/products/${item?.product}`}>{item?.name}</Link>
          </div>
 
          <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-           <p>$50.00</p>
+           <p>${item?.price}</p>
          </div>
 
          <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-           <p>2 Piece(s)</p>
+           <p>{item?.quantity}Piece(s)</p>
          </div>
        </div>
         ))}

@@ -1,7 +1,7 @@
 import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 
 export const orderApi=createApi({
-    reducerPath:"productApi",
+    reducerPath:"orderApi",
     baseQuery: fetchBaseQuery({baseUrl:"/api/v1"}),
     endpoints:(builder)=>({
         createNewOrder: builder.mutation({
