@@ -20,9 +20,9 @@ const NewReview = ({productId}) => {
    },[error,isSuccess]);
 
   const submitHandler=()=>{
-   const reviewData={rating,comment,productId};
+   const reviewData= {rating,comment,productId};
    submitReview(reviewData);
-  }
+  };
 
 
   return (
