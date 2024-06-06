@@ -5,6 +5,9 @@ import { useOrderDetailsQuery } from '../../redux/api/orderApi'
 import {Link ,useParams} from "react-router-dom"
 import Loader from "../layout/Loader"
 import {toast} from 'react-hot-toast';
+import html2canvas from "html2canvas";
+import {jsPDF} from "jspdf";
+
 
 const Invoice = () => {
 
@@ -20,6 +23,17 @@ const Invoice = () => {
     }
    },[error]);
 
+   const handleDownload=()=>{
+    const input=document.getElementById("order_invoice");
+    html2canvas(input).then ((canvas)=>{
+        const imgData=canvas.toDataURL("image/png")
+        const pdf=new jsPDF();
+        const pdfWidth=pdf.internal.pageSize.getWidth();
+        pdf.addImage(imgData,"PNG",0,0,pdfWidth,0);
+        pdf.save(`invoice_${order?._id}.pdf`);
+    })
+   };
+
 
   if(isLoading) return <Loader/>;
 
@@ -28,7 +42,7 @@ const Invoice = () => {
         <MetaData title={"Order Invoice"} />
     <div className="order-invoice my-5">
       <div className="row d-flex justify-content-center mb-5">
-        <button className="btn btn-success col-md-5">
+        <button className="btn btn-success col-md-5" onClick={handleDownload}>
           <i className="fa fa-print"></i> Download Invoice
         </button>
       </div>
@@ -52,13 +66,13 @@ const Invoice = () => {
           </div>
           <div id="project">
             <div><span>Name</span> {user?.name}</div>
-            <div><span>EMAIL</span> john.doe@example.com</div>
-            <div><span>PHONE</span> {user?.phoneNo}</div>
+            <div><span>EMAIL</span> {user?.email}</div>
+            <div><span>PHONE</span> {shippingInfo?.phoneNo}</div>
             <div>
-              <span>ADDRESS</span> {}
+              <span>ADDRESS</span> {shippingInfo?.address},{shippingInfo?.city},{shippingInfo?.zipCode},{shippingInfo?.country}
             </div>
-            <div><span>DATE</span> 2023-09-19</div>
-            <div><span>Status</span> Paid</div>
+            <div><span>DATE</span> {new Date(order?.createdAt).toLocaleString("en-US")}</div>
+            <div><span>Status</span> {paymentInfo?.status}</div>
           </div>
         </header>
         <main>
@@ -73,6 +87,15 @@ const Invoice = () => {
               </tr>
             </thead>
             <tbody>
+                {orderItems?.map((item)=>(
+                     <tr>
+                     <td className="service">{item?.product}</td>
+                     <td className="desc">{item?.name}</td>
+                     <td className="unit">${item?.price}</td>
+                     <td className="qty">{item?.quantity}</td>
+                     <td className="total">${item?.price * item?.quantity}</td>
+                   </tr>
+                ))}
               <tr>
                 <td className="service">1</td>
                 <td className="desc">Product 1</td>
@@ -80,40 +103,34 @@ const Invoice = () => {
                 <td className="qty">3</td>
                 <td className="total">$1499.97</td>
               </tr>
-              <tr>
-                <td className="service">2</td>
-                <td className="desc">Product 2</td>
-                <td className="unit">$399.99</td>
-                <td className="qty">2</td>
-                <td className="total">$799.98</td>
-              </tr>
+             
 
               <tr>
                 <td colspan="4">
                   <b>SUBTOTAL</b>
                 </td>
-                <td className="total">$2299.95</td>
+                <td className="total">${order?.itemsPrice}</td>
               </tr>
 
               <tr>
                 <td colspan="4">
                   <b>TAX 15%</b>
                 </td>
-                <td className="total">$344.99</td>
+                <td className="total">${order?.taxAmount}</td>
               </tr>
 
               <tr>
                 <td colspan="4">
                   <b>SHIPPING</b>
                 </td>
-                <td className="total">$10.00</td>
+                <td className="total">${order?.shippingAmount}</td>
               </tr>
 
               <tr>
                 <td colspan="4" className="grand total">
                   <b>GRAND TOTAL</b>
                 </td>
-                <td className="grand total">$2654.94</td>
+                <td className="grand total">${order?.totalAmount}</td>
               </tr>
             </tbody>
           </table>
