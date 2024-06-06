@@ -1,10 +1,27 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import MetaData from '../layout/MetaData'
 import "./Invoice.css"
+import { useOrderDetailsQuery } from '../../redux/api/orderApi'
+import {Link ,useParams} from "react-router-dom"
+import Loader from "../layout/Loader"
+import {toast} from 'react-hot-toast';
 
 const Invoice = () => {
 
+    const params=useParams()
+  const { data,isLoading,error}=useOrderDetailsQuery(params?.id);
+  const order=data?.order || {};
 
+  const { shippingInfo,orderItems,paymentInfo,user,totalAmount,orderStatus}=order;
+
+  useEffect(()=>{
+    if(error){
+        toast.error(error?.data?.message);
+    }
+   },[error]);
+
+
+  if(isLoading) return <Loader/>;
 
   return (
     <div>
@@ -20,7 +37,7 @@ const Invoice = () => {
           <div id="logo">
             <img src="../images/invoice-logo.png" alt="Company Logo" />
           </div>
-          <h1>INVOICE # 12345</h1>
+          <h1>INVOICE # {order?._id}</h1>
           <div id="company" className="clearfix">
             <div>ShopIT</div>
             <div>
@@ -34,11 +51,11 @@ const Invoice = () => {
             </div>
           </div>
           <div id="project">
-            <div><span>Name</span> John Doe</div>
+            <div><span>Name</span> {user?.name}</div>
             <div><span>EMAIL</span> john.doe@example.com</div>
-            <div><span>PHONE</span> 123-456-7890</div>
+            <div><span>PHONE</span> {user?.phoneNo}</div>
             <div>
-              <span>ADDRESS</span> 123 Main St, Cityville, 12345, Country
+              <span>ADDRESS</span> {}
             </div>
             <div><span>DATE</span> 2023-09-19</div>
             <div><span>Status</span> Paid</div>

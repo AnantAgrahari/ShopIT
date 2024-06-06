@@ -20,7 +20,8 @@ import PaymentMethod from "./components/cart/PaymentMethod";
 import orderAccepted from "./components/cart/orderAccepted";
 import MyOrders from "./components/order/MyOrders";
 import OrderDetails from "./components/order/OrderDetails";
-import Invoice from "./components/invoice/Invoice.jsx";
+import Invoice from "./components/invoice/invoice";
+
 function App() {
   return (
     <Router>
