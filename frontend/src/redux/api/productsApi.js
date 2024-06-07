@@ -31,7 +31,10 @@ export const productApi=createApi({
               },
               invalidatesTags: ["Product"],
            }),
+           canUserReview: builder.query({
+            query:(productId)=>`/can_review/?productId=${productId}`,
+           }),
     }),
 });
 
-export const { useGetProductsQuery,useGetProductDetailsQuery,useSubmitReviewMutation}=productApi;      //this hook will fetch all the products from the backend//
+export const { useGetProductsQuery,useGetProductDetailsQuery,useSubmitReviewMutation,useCanUserReviewQuery}=productApi;      //this hook will fetch all the products from the backend//

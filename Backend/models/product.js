@@ -55,15 +55,15 @@ const productSchema=new mongoose.Schema({
             user:{                                    //this is that user that has created the review//
                 type:mongoose.Schema.Types.ObjectId,
                 ref:"User",
-                required: true
+                required: true,
             },
             rating:{
                 type: Number,
-                required:true
+                required:true,
             },
             comment:{
                 type: String,
-                required: true
+                required: true,
             },
         },
     ],

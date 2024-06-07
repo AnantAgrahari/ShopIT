@@ -1,4 +1,5 @@
 import catchAsyncErrors from "../middlewares/catchAsyncErrors.js";
+import Order from "../models/order.js";
 import Product from "../models/product.js";
 import APIFilters from "../utils/apiFilters.js";
 import ErrorHandler from "../utils/errorHandler.js";
@@ -80,14 +81,14 @@ export const getProductDetails=catchAsyncErrors(async(req,res,next)=>{
     rating: Number(rating),
     comment,
   };
-  const product=await Product.findById(produtId);
+  const product=await Product.findById(productId);
  
     if(!product)                          
     {
         return next(new ErrorHandler('Product not found',404));
     }
 
- const isReviewed=product?.reviews?.find((r)=>r.user.toString()===req?.user?._id.toString());
+ const isReviewed=product?.reviews?.find((r)=>r.user.toString()===req?.user?._id.toString());                //if the user has given the review then we can update it ,if not,then create new one//
  if(isReviewed){
     product.reviews.forEach((review)=>{
         if(review?.user?.toString()===req?.user?._id.toString())
@@ -101,9 +102,9 @@ export const getProductDetails=catchAsyncErrors(async(req,res,next)=>{
     product.numOfReviews=product.reviews.length;
  }
 
- product.ratings=product.reviews.reduce((acc,item)=>item.rating+acc,0)/product.reviews.ratings.length;
+ product.ratings=product.reviews.reduce((acc,item)=>item.rating+acc,0)/product.reviews.length;
 
- await product.save({validateBeforesave: false});
+ await product.save({validateBeforeSave: false});
     res.status(200).json({ success:true,});
  });
 
@@ -147,3 +148,19 @@ export const getProductDetails=catchAsyncErrors(async(req,res,next)=>{
       res.status(200).json({ success:true,product});
    });
   
+
+
+   //Can user review  /api/v1/can_review
+   export const canUserReview=catchAsyncErrors(async(req,res)=>{
+     const orders=await Order.find({
+        user: req.user._id,
+        "orderItems.product": req.query.productId,
+     });
+
+     if(orders.length===0){
+        return res.status(200).json({
+            canReview: false
+        })
+     }
+    res.status(200).json({canReview: true,});
+ });
