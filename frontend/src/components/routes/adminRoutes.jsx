@@ -5,7 +5,7 @@ import Dashboard from '../admin/Dashboard';
 const adminRoutes = () => {
   return (
     <>
-      <Route path="/admin/dashboard" element={   <ProtectedRoute><Dashboard/></ProtectedRoute>}/>
+      <Route path="/admin/dashboard" element={   <ProtectedRoute admin={true}><Dashboard/></ProtectedRoute>}/>
     </>
   )
 }
