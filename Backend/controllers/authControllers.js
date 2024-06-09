@@ -7,6 +7,7 @@ import sendToken from "../utils/sendToken.js";
 import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
 
+
 //register user
 export const registerUser=catchAsyncErrors(async(req,res,next)=>{
     const { name,email,password}= req.body;
@@ -92,7 +93,7 @@ export const forgotPassword=catchAsyncErrors(async(req,res,next)=>{
         });
 
         res.status(200).json({                    
-            message:`email sent to: ${user.email}`,                //if sentEmail func. executes successfully then it will show confirmation message//
+            message:`email sent to: ${user.email}`,                //if sendEmail func. executes successfully then it will show confirmation message//
         });
      } catch (error) {
         user.resetPasswordToken = undefined;

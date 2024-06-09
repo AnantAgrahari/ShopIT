@@ -14,7 +14,7 @@ export default  (user,statusCode,res)=>{
 
 
      res.status(statusCode).cookie("token",token,options).json({            //res is used to send back the response
-        token,                                                               //.cookie is used to create the cookie and syntax written after that will store the token into the cookie//
+        token,                                                        //.cookie is used to create the cookie and syntax written after that will store the token into the cookie//
      });
 };
 

@@ -2,11 +2,17 @@ import React from 'react'
 import AdminLayout from '../layout/AdminLayout';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-const Dashboard = () => {
+import SalesChart from "../charts/SalesChart";const Dashboard = () => {
 
      const [startDate,setStartDate]=useState(new Date().setDate(1));
      const [endDate,setEndDate]=useState(new Date());
+
+     const submitHandler=()=>{
+      console.log("======");
+      console.log(new Date(startDate).toISOString());
+      console.log(endDate.toISOString());
+      console.log("=====");
+     }
 
   return (
     <AdminLayout>
@@ -34,7 +40,7 @@ const Dashboard = () => {
   className='form-control'
   />
       </div>
-      <button className="btn fetch-btn ms-4 mt-3 px-5">Fetch</button>
+      <button className="btn fetch-btn ms-4 mt-3 px-5" onClick={submitHandler}>Fetch</button>
     </div>
 
     <div className="row pr-4 my-5">
@@ -63,6 +69,7 @@ const Dashboard = () => {
       </div>
     </div>
 
+   <SalesChart />
     <div className="mb-5"></div>
     </AdminLayout>
   )

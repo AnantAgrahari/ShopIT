@@ -73,6 +73,6 @@ const productSchema=new mongoose.Schema({
         required: true,
     },    
 },
-   { timestamps: true }              //mongooose will automatically create a at what date it is created// 
+   { timestamps: true }              //mongoose will automatically create a at what date it is created// 
 );
 export default mongoose.model("Product",productSchema);

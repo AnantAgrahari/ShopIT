@@ -31,7 +31,7 @@ import crypto from "crypto";
     resetPasswordToken: String,
     resetPasswordExpire: Date,
  },
- { timestamps: true }                 // it will show all the details about when the it is created and updated//
+ { timestamps: true }                 // it will show all the details about when all these above fields are created and updated//
  );
 
 
@@ -49,16 +49,19 @@ import crypto from "crypto";
   
   //return JWT token//
   userSchema.methods.getJwtToken=function(){
-   return jwt.sign({id: this._id},process.env.JWT_SECRET,{
+   return jwt.sign({id: this._id},process.env.JWT_SECRET,{            //process.env is the function which has env file that has all the important data//0
         expiresIn: process.env.JWT_EXPIRES_TIME,                  //after the expiry time the user has to login again//
     } );
   };
 
     // compare user password//
-    userSchema.methods.comparePassword=async function (enteredPassword){
+    userSchema.methods.comparePassword=async function (enteredPassword){             // compare Password is the in built function// 
         return await bcrypt.compare(enteredPassword,this.password);              //entered password is the password enterd by the user and this.password is the password that is there in the database//
-    }
+    }                                                                           //compare is also the inbuilt function//
 
+
+
+    
     
     //Generate reset password token//
     userSchema.methods.getResetPasswordToken=function(){
