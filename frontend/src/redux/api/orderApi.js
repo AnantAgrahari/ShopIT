@@ -19,7 +19,11 @@ export const orderApi=createApi({
                 orderDetails: builder.query({
                     query:(id)=>`/orders/${id}`,
                       }),
+
+                getDashboardSales: builder.query({
+                        query:({startDate,endDate})=>`/admin/get_sales/?startDate=${startDate}&endDate=${endDate}`,
+                          }),    
         }),            //builder.query is used to fetch the data and builder.mutation is used to post,put the data//   
            });
 
-export const {useCreateNewOrderMutation,useMyOrdersQuery,useOrderDetailsQuery}=orderApi;      //this hook will fetch all the products from the backend//
+export const {useCreateNewOrderMutation,useMyOrdersQuery,useOrderDetailsQuery,useLazyGetDashboardSalesQuery}=orderApi;      //this hook will fetch all the products from the backend//

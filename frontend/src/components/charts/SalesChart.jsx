@@ -21,58 +21,59 @@ ChartJS.register(
     Tooltip,
     Legend,
 );
-export const options={
-    responsive: true,
-    interaction:{
-        mode : 'index',
-        intersect: false
-    },
-    stacked: false,
-    plugins:{
-        title:{
-            display: true,
-            text: 'Sales &  Order Data',
+
+
+export default function SalesChart({salesData}){
+     const options={
+        responsive: true,
+        interaction:{
+            mode : 'index',
+            intersect: false
         },
-    },
-    scales:{
-        y:{
-            type: 'linear',
-            display: true,
-            position: 'left', 
-        },
-        y1:{
-            type: 'linear',
-            display: true,
-            position:'right',
-            grid:{
-                drawOnchartArea: false,
+        stacked: false,
+        plugins:{
+            title:{
+                display: true,
+                text: 'Sales &  Order Data',
             },
         },
-    },
-};
-
-const lables=["January","February","March","April","May","June","July"];
-
-export const data={
-    lables,
-    datasets:[
-        {
-            label: "Sales",
-            data:[12,45,68,45,23,44],
-            borderColor: "#198753",
-            backgroundColor: "rgba(42,117,83,0.5)",
-            yAxisId: "y",
+        scales:{
+            y:{
+                type: 'linear',
+                display: true,
+                position: 'left', 
+            },
+            y1:{
+                type: 'linear',
+                display: true,
+                position:'right',
+                grid:{
+                    drawOnchartArea: false,
+                },
+            },
         },
-        {
-            label: "Orders",
-            data:[12,5,9,45,78,4],
-            borderColor: "rgb(220,52,69)",
-            backgroundColor: "rgba(201,68,82,0.5)",
-            yAxisId: "y1",
-        },
-    ],
-};
-
-export default function SalesChart(){
+    };
+    
+    const lables=salesData?.map((data)=>data?.date);
+    
+    const data={
+        lables,
+        datasets:[
+            {
+                label: "Sales",
+                data: salesData?.map((data)=>data?.sales),
+                borderColor: "#198753",
+                backgroundColor: "rgba(42,117,83,0.5)",
+                yAxisId: "y",
+            },
+            {
+                label: "Orders",
+                data:salesData?.map((data)=>data?.numOrders),
+                borderColor: "rgb(220,52,69)",
+                backgroundColor: "rgba(201,68,82,0.5)",
+                yAxisId: "y1",
+            },
+        ],
+    };
     return <Line options={options} data={data} />;
 }

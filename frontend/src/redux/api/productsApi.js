@@ -1,4 +1,5 @@
 import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
+
 export const productApi=createApi({
     reducerPath:"productApi",
     baseQuery: fetchBaseQuery({baseUrl:"/api/v1"}),
@@ -34,7 +35,11 @@ export const productApi=createApi({
            canUserReview: builder.query({
             query:(productId)=>`/can_review/?productId=${productId}`,
            }),
+
+           getAdminProducts: builder.query({
+            query:(productId)=>`/admin/products`,
+           }),
     }),
 });
 
-export const { useGetProductsQuery,useGetProductDetailsQuery,useSubmitReviewMutation,useCanUserReviewQuery}=productApi;      //this hook will fetch all the products from the backend//
+export const { useGetProductsQuery,useGetProductDetailsQuery,useSubmitReviewMutation,useCanUserReviewQuery,useGetAdminProductsQuery}=productApi;      //this hook will fetch all the products from the backend//

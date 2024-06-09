@@ -39,6 +39,14 @@ export const getProductDetails=catchAsyncErrors(async(req,res,next)=>{
  });
 
 
+ //get products- admin => /api/v1/admin/products
+ export const getAdminProducts=catchAsyncErrors(async(req,res,next)=>{
+   const products=await Product.find();
+
+   res.status(200).json({ products,});
+});
+
+
 
  export const updateProducts=catchAsyncErrors(async(req,res)=>{
     let product=await Product.findById(req?.params?.id);  //create func is used to create a doc of whole model//

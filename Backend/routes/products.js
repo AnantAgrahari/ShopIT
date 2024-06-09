@@ -1,10 +1,11 @@
 import express from "express";
-import { getProducts, newProduct, getProductDetails, updateProducts,deleteProducts, createProductReview, getProductReviews, deleteReview, canUserReview } from "../controllers/productControllers.js";
+import { getProducts, newProduct, getProductDetails, updateProducts,deleteProducts, createProductReview, getProductReviews, deleteReview, canUserReview, getAdminProducts } from "../controllers/productControllers.js";
 import { authorizeRoles,isAuthenticatedUser } from "../middlewares/auth.js";
 const router=express.Router();   //will enable the routes function//
 
 router.route("/products").get(getProducts);         //authorizeRoles is also a middleware//
-router.route("/admin/products").post(isAuthenticatedUser,authorizeRoles('admin'),newProduct); 
+router.route("/admin/products").post(isAuthenticatedUser,authorizeRoles('admin'),newProduct).get(isAuthenticatedUser,authorizeRoles('admin'),getAdminProducts); 
+
 
 router.route("/products/:id").get(getProductDetails);
 
