@@ -64,12 +64,17 @@ export const getProductDetails=catchAsyncErrors(async(req,res,next)=>{
 
 
 
- export const deleteProducts=catchAsyncErrors(async(req,res)=>{
+ export const deleteProduct=catchAsyncErrors(async(req,res)=>{
     let product=await Product.findById(req?.params?.id);  //create func is used to create a doc of whole model//
  
     if(!product)                          //if product is not present//
     {
         return next(new ErrorHandler('Product not found',404));
+    }
+
+    //Deleting image associated with product//
+    for(let i=0;i<product?.images?.length;i++){
+      await delete_file(product?.images[i].public_id);
     }
 
    await product.deleteOne();

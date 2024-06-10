@@ -3,7 +3,7 @@ import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const productApi=createApi({
     reducerPath:"productApi",
     baseQuery: fetchBaseQuery({baseUrl:"/api/v1"}),
-    tagTypes: ["Product"],
+    tagTypes: ["Product","AdminProducts"],
     endpoints:(builder)=>({
         getProducts: builder.query({
             query:(params)=>({
@@ -37,9 +37,42 @@ export const productApi=createApi({
            }),
 
            getAdminProducts: builder.query({
-            query:(productId)=>`/admin/products`,
+            query:()=>`/admin/products`,
+            providesTags: ["AdminProducts"],
            }),
+
+           createProduct: builder.mutation({
+            query(body){
+              return{
+                  url:"/admin/products",
+                  method:"POST",
+                  body,
+              }; 
+            },
+            invalidatesTags:["AdminProducts"],
+         }),
+
+              updateProduct: builder.mutation({
+            query(id,body){
+              return{
+             url:`/admin/products/${id}`,
+                  method:"PUT",
+                  body,
+              }; 
+            },
+            invalidatesTags:["Product","AdminProducts"],
+         }),
+
+         deleteProduct: builder.mutation({
+            query(id){
+              return{
+             url:`/admin/products/${id}`,
+                  method:"DELETE",
+              }; 
+            },
+            invalidatesTags:["AdminProducts"],
+         }),
     }),
 });
 
-export const { useGetProductsQuery,useGetProductDetailsQuery,useSubmitReviewMutation,useCanUserReviewQuery,useGetAdminProductsQuery}=productApi;      //this hook will fetch all the products from the backend//
+export const { useGetProductsQuery,useGetProductDetailsQuery,useSubmitReviewMutation,useCanUserReviewQuery,useGetAdminProductsQuery,useCreateProductMutation,useUpdateProductMutation,useDeleteProductMutation}=productApi;      //this hook will fetch all the products from the backend//
