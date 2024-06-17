@@ -7,6 +7,7 @@ import ErrorHandler from "../utils/errorHandler.js";
 
 
 export const getProducts=catchAsyncErrors(async(req,res,next)=>{
+   console.log("fshdhyfdjhyfhjfhjfghvnhv");
     const resPerPage=4;
     const apiFilters=new APIFilters(Product,req.query).search().filters();    //searches the product with just a keyword//
     let products=await apiFilters.query;      //same here also//
@@ -14,7 +15,7 @@ export const getProducts=catchAsyncErrors(async(req,res,next)=>{
 
     apiFilters.pagination(resPerPage);
     products=await apiFilters.query.clone();   // we are executing it for the 2nd time so we have to clone it//
-
+   console.log(products);
     res.status(200).json({resPerPage,filteredProductsCount,products}); 
 });
 
