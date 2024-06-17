@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react'
-
+import React,{useEffect,useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import Loader from "../layout/Loader"
 import {toast} from 'react-hot-toast';
 
@@ -7,6 +7,7 @@ import MetaData from '../layout/MetaData'
 
 import AdminLayout from '../layout/AdminLayout';
 import { useCreateProductMutation } from '../../redux/api/productsApi';
+import { PRODUCT_CATEGORIES } from '../../constants/constants';
 
 const NewProduct = () => {
 
@@ -37,7 +38,7 @@ const NewProduct = () => {
     const onChange=(e)=>{
         setProduct({...product,[e.target.name]: e.target.value});
      };
-    }
+    
 
 
     const submitHandler=(e)=>{
@@ -136,6 +137,6 @@ const NewProduct = () => {
   </div>
 </AdminLayout>
   )
-
+}
 
 export default NewProduct

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import AdminLayout from '../layout/AdminLayout';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,12 +6,14 @@ import SalesChart from "../charts/SalesChart";import { useLazyGetDashboardSalesQ
 import Loader from "../layout/Loader";
 import MetaData from '../layout/MetaData'
 
+import {toast} from 'react-hot-toast';
+
 const Dashboard = () => {
 
      const [startDate,setStartDate]=useState(new Date().setDate(1));
      const [endDate,setEndDate]=useState(new Date());
 
-     const [getDashboardSales,{error,isLoading}]=useLazyGetDashboardSalesQuery();
+     const [getDashboardSales,{error,isLoading,data}]=useLazyGetDashboardSalesQuery();
 
      useEffect(()=>{
 
