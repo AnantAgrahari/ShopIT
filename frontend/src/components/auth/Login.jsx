@@ -10,6 +10,7 @@ const Login = () => {
     const [password,setPassword]=useState("");
 
    const navigate=useNavigate();
+   // eslint-disable-next-line
     const [login,{isLoading,error,data}]=useLoginMutation();
      const {isAuthenticated}=useSelector((state)=>state.auth)
      
@@ -20,7 +21,7 @@ const Login = () => {
 
         if(error){
             toast.error(error?.data?.message);
-        }
+        }  // eslint-disable-next-line
     },[error,isAuthenticated]);
 
    const submitHandler=(e)=>{

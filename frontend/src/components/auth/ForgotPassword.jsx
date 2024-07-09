@@ -26,7 +26,7 @@ const ForgotPassword = () => {
       if(isSuccess)
       {
         toast.success("email sent, please check your inbox");
-      }
+      }  // eslint-disable-next-line
   },[error,isAuthenticated,isSuccess]);
 
  const submitHandler=(e)=>{

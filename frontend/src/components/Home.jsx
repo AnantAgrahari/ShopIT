@@ -31,7 +31,7 @@ const Home = () => {
     if(isError)
     {
         toast.error(error?.data?.message);
-    }
+    }  // eslint-disable-next-line
    },[isError]);
 
 

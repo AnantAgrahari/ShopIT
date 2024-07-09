@@ -1,12 +1,12 @@
 import React,{useEffect,useState} from 'react'
 
-import Loader from "../layout/Loader"
+// import Loader from "../layout/Loader"
 import {toast} from 'react-hot-toast';
 
 import MetaData from '../layout/MetaData'
 import { useNavigate } from 'react-router-dom';
 import AdminLayout from '../layout/AdminLayout';
-import { useCreateProductMutation, useGetProductDetailsQuery, useUpdateProductMutation } from '../../redux/api/productsApi';
+import { useGetProductDetailsQuery, useUpdateProductMutation } from '../../redux/api/productsApi';
 import { useParams } from 'react-router-dom';
 import { PRODUCT_CATEGORIES } from '../../constants/constants';
 
@@ -46,7 +46,7 @@ const UpdateProduct = () => {
         if(isSuccess){
             toast.success("Product updated");
             navigate('/admin/products');
-        }
+        } // eslint-disable-next-line
        },[error,isSuccess,data]);
 
     const {name,description,price,category,stock,seller}=product;

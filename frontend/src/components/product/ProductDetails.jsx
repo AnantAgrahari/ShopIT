@@ -9,6 +9,7 @@ import { setCartItem } from '../../redux/features/cartSlice';
 import MetaData from '../layout/MetaData'
 import NewReview from '../reviews/NewReview';
 import ListReviews from '../reviews/ListReviews';
+import NotFound from '../layout/NotFound';
 const ProductDetails = () => {
 
    const params=useParams();
@@ -28,7 +29,7 @@ const ProductDetails = () => {
    useEffect(()=>{
     if(isError){
         toast.error(error?.data?.message);
-    }
+    }  // eslint-disable-next-line
    },[isError]);
 
     
@@ -62,10 +63,14 @@ const ProductDetails = () => {
       dispatch(setCartItem(cartItem));
       toast.success("item added to cart");
     };
-      
+    
 
    if(isLoading)
    return <Loader/>;
+    // eslint-disable-next-line
+   if(error && error?.status==404){
+    return <NotFound/>
+  }
 
   return (
     <>
@@ -83,7 +88,7 @@ const ProductDetails = () => {
       </div>
       <div className="row justify-content-start mt-5">
         {product?.images?.map((img)=>(
-             <div className="col-2 ms-4 mt-2">
+             <div className="col-2 ms-4 mt-2"> 
              <a role="button">
                <img
                  className=

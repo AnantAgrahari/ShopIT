@@ -24,7 +24,7 @@ const MyOrders = () => {
 {
      dispatch(clearCart());
      navigate("/me/orders")
-}
+}    // eslint-disable-next-line
    },[error,orderSuccess]);
 
    const setOrders=()=>{

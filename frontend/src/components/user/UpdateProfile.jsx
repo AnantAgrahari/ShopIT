@@ -29,7 +29,7 @@ const UpdateProfile = () => {
             navigate("/me/profile");
         }
 
-
+      // eslint-disable-next-line
      },[user,error,isSuccess]);
 
 

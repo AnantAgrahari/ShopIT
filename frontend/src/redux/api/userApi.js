@@ -1,5 +1,6 @@
 import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 import { setIsAuthenticated, setUser,setLoading } from "../features/userSlice";
+// eslint-disable-next-line
 import UpdateUser from "../../components/admin/UpdateUser";
 export const userApi=createApi({
     reducerPath:"userApi",

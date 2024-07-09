@@ -25,7 +25,7 @@ const UpdatePassword = () => {
              navigate("/me/profile");
          }
  
- 
+        // eslint-disable-next-line
       },[error,isSuccess]);
  
  

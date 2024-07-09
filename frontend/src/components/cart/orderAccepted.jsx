@@ -8,4 +8,4 @@ const orderAccepted = () => {
   )
 }
 
-export default orderAccepted
+export default orderAccepted;

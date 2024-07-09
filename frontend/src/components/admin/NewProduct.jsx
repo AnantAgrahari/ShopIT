@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import Loader from "../layout/Loader"
+// import Loader from "../layout/Loader"
 import {toast} from 'react-hot-toast';
 
 import MetaData from '../layout/MetaData'
@@ -31,7 +31,7 @@ const NewProduct = () => {
         if(isSuccess){
             toast.success("Product Created");
             navigate('/admin/products');
-        }
+        } // eslint-disable-next-line
        },[error,isSuccess]);
 
     const {name,description,price,category,stock,seller}=product;

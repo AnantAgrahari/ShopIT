@@ -13,7 +13,7 @@ const PaymentMethod = () => {
 
     const { shippingInfo,cartItems}=useSelector((state)=>state.cart);
   const navigate=useNavigate();
-   const [createNewOrder,{isLoading,error,isSuccess}]=useCreateNewOrderMutation();
+   const [createNewOrder,{error,isSuccess}]=useCreateNewOrderMutation();
 
   useEffect(()=>{
     if(error){
@@ -21,7 +21,7 @@ const PaymentMethod = () => {
     }
     if(isSuccess){
         navigate("/me/orders?order_success=true");
-    }
+    }  // eslint-disable-next-line
   },[error,isSuccess]);
 
 

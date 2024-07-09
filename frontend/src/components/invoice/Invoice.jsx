@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import MetaData from '../layout/MetaData'
 import "./Invoice.css"
 import { useOrderDetailsQuery } from '../../redux/api/orderApi'
-import {Link ,useParams} from "react-router-dom"
+import {useParams} from "react-router-dom"
 import Loader from "../layout/Loader"
 import {toast} from 'react-hot-toast';
 import html2canvas from "html2canvas";
@@ -11,11 +11,11 @@ import {jsPDF} from "jspdf";
 
 const Invoice = () => {
 
-    const params=useParams()
+    const params=useParams();
   const { data,isLoading,error}=useOrderDetailsQuery(params?.id);
   const order=data?.order || {};
-
-  const { shippingInfo,orderItems,paymentInfo,user,totalAmount,orderStatus}=order;
+  // eslint-disable-next-line
+  const { shippingInfo,orderItems,paymentInfo,user,totalAmount}=order;
 
   useEffect(()=>{
     if(error){

@@ -1,7 +1,7 @@
 import React from 'react'
 import MetaData from '../layout/MetaData'
 import { useSelector } from 'react-redux'
-import { Link,useNavigate} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import { calculateOrderCost } from '../../helpers/helpers'
 import CheckoutSteps from './CheckoutSteps'
 
@@ -9,7 +9,7 @@ const ConfirmOrder = () => {
 
    const {cartItems,shippingInfo}=useSelector((state)=>state.cart)         //this is used to get the data of cartitems and shipping info//
    const {user}=useSelector((state)=>state.auth);                          //this is used to get the details of the user which is to be displayed on the confirm order page//
-   const navigate=useNavigate();
+  //  const navigate=useNavigate();
 
    const {  itemsPrice,
     shippingPrice,

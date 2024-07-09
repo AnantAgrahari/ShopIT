@@ -13,7 +13,8 @@ const Register = () => {
    });
 
     const {name,email,password}=user;
-    const navigate=useNavigate()
+    const navigate=useNavigate();
+    // eslint-disable-next-line
  const[register,{isLoading,error,data}]=useRegisterMutation();     //this is done to handle loading ,error,data all in one line//
  
 
@@ -26,7 +27,7 @@ const Register = () => {
 
      if(error){
          toast.error(error?.data?.message);
-     }
+     }  // eslint-disable-next-line
  },[error,isAuthenticated]);
 
   const submitHandler=(e)=>{

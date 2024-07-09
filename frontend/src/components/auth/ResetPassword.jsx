@@ -29,7 +29,7 @@ const ResetPassword = () => {
       {
         toast.success("Password reset successfull");
         navigate("/login");
-      }
+      }  // eslint-disable-next-line
   },[error,isAuthenticated, isSuccess]);
 
  const submitHandler=(e)=>{

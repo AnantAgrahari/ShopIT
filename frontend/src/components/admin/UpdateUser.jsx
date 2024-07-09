@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react'
 
-import Loader from "../layout/Loader"
+// import Loader from "../layout/Loader"
 import {toast} from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MetaData from '../layout/MetaData'
 
 
@@ -40,7 +40,7 @@ const UpdateUser = () => {
             navigate("/admin/users");
         }
 
-
+     // eslint-disable-next-line
      },[error,isSuccess]);
 
 
