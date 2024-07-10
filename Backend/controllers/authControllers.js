@@ -53,7 +53,7 @@ export const loginUser=catchAsyncErrors(async(req,res,next)=>{
 
 
 // Logout user
-export const logoutUser=catchAsyncErrors(async(req,res,next)=>{
+export const logout = catchAsyncErrors(async(req,res,next)=>{
     res.cookie("token",null,{                                           //by setting the token value to null,we can delete the cookie//
         expires: new Date(Date.now()),                        //deletes the cookie instantly//
         httpOnly: true,
